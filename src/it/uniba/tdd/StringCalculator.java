@@ -8,33 +8,29 @@ public class StringCalculator {
 		String myNumbersStr = numbersStr;
 		String[] numbers = null;
 		String separator = "\n|,";
-
+		
+		
+		//preparation of separators
 		if (myNumbersStr.contains("//") && myNumbersStr.contains("\n")) {
 			int end = myNumbersStr.indexOf("\n");
-			
-			if (myNumbersStr.contains("//[") && myNumbersStr.contains("]\n")) {
-				if(myNumbersStr.contains("][") ){
-					String tempSeparator = myNumbersStr.substring(3, end -1 );
-					separator = "";
-					for(int i=0; i<tempSeparator.length(); i++){
-						if(tempSeparator.charAt(i)==']' && tempSeparator.charAt(i + 1)=='['){
-							separator += "|";
-						} else if(tempSeparator.charAt(i)!='['){
-							separator += tempSeparator.charAt(i);
-						}
-						
-					}
-					
-				} else {
-					separator = myNumbersStr.substring(3, end -1 );
+			String myTempSeparator = myNumbersStr.substring(2, end);
+			int i=0;
+			separator = "";
+			while(i<myTempSeparator.length()){
+				if(myTempSeparator.charAt(i)=='['){
+					i++;
 				}
-			} else {
-				separator = myNumbersStr.substring(2, 3);
+				if(myTempSeparator.charAt(i)==']' && i!=myTempSeparator.length()-1){
+					separator += "|";
+				} else if(myTempSeparator.charAt(i)!=']'){
+					separator += myTempSeparator.charAt(i);					
+				}
+				i++;
 			}
-			
 			myNumbersStr = myNumbersStr.substring(end + 1);
 		}
 
+		//computing of numbers
 		if (myNumbersStr.length() == 0) {
 			sum = 0;
 		} else {
